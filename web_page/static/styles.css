@@ -1,0 +1,43 @@
+a, 
+a:hover, 
+a:active, 
+a:visited, 
+a:focus{
+    text-decoration: none !important;
+    color: inherit;
+}
+.homepage-title{
+    font-size:x-large;
+    color: rgba(38, 38, 38, 1);
+}
+.icon-effects{
+    transition: all 0.3s ease-out;
+}
+.card-effects{
+    transition: all 0.3s ease-out;
+}
+.card-effects:hover{
+    box-shadow: 0px 2.0px 8.0px rgba(38, 38, 38, 0.5);
+    transition: all 0.2s ease-out;
+}
+.card-effects:active, .icon-effects:active{
+    transform: scale(0.95);
+    transition: all 0.2s ease-out;
+}
+.flex{
+    display: flex;
+    align-items: center;
+}
+.my-container{
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+.card-title-section{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    font-size:large;
+    color: rgba(38, 38, 38, 1);
+}
