@@ -1,43 +1,116 @@
-a, 
-a:hover, 
-a:active, 
-a:visited, 
-a:focus{
-    text-decoration: none !important;
-    color: inherit;
+#main{
+    flex-direction: row;
 }
-.homepage-title{
-    font-size:x-large;
-    color: rgba(38, 38, 38, 1);
+img{
+    width: 100%; /* or any custom size */
+    height: 100%; 
+    max-height: 200px;
+    object-fit: cover;
+    overflow:hidden;
 }
-.icon-effects{
-    transition: all 0.3s ease-out;
+a{
+    text-decoration: none;
 }
-.card-effects{
-    transition: all 0.3s ease-out;
+button:hover{
+    cursor: pointer;
 }
-.card-effects:hover{
-    box-shadow: 0px 2.0px 8.0px rgba(38, 38, 38, 0.5);
-    transition: all 0.2s ease-out;
-}
-.card-effects:active, .icon-effects:active{
-    transform: scale(0.95);
-    transition: all 0.2s ease-out;
+
+.row{
+    flex-direction: column;
 }
 .flex{
     display: flex;
-    align-items: center;
 }
-.my-container{
-    display: flex;
-    align-items: center;
-    list-style: none;
+.wrap{
+    flex-wrap: wrap;
 }
-.card-title-section{
-    display: flex;
-    align-items: center;
+.justify-content-center{
+    justify-content: center;
+}
+.justify-content-baseline{
+    justify-content: baseline;
+}
+.justify-content-space-around{
+    justify-content: space-around;
+}
+.justify-content-space-between{
     justify-content: space-between;
-    gap: 50px;
-    font-size:large;
-    color: rgba(38, 38, 38, 1);
+}
+
+
+
+
+.p-4{
+    padding: 4px;
+}
+.m-4{
+    margin: 4px;
+}
+
+.p-8{
+    padding: 8px;
+}
+.pv-8{
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.ph-8{
+    padding-right: 8px;
+    padding-left: 8px;
+}
+.m-8{
+    margin: 8px;
+}
+.mv-8{
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.mh-8{
+    margin-right: 8px;
+    margin-left: 8px;
+}
+
+.p-16{
+    padding: 16px;
+}
+.pv-16{
+    padding-top: 16;
+    padding-bottom: 16px;
+}
+.ph-16{
+    padding-right: 16px;
+    padding-left: 16px;
+}
+.m-16{
+    margin: 16px;
+}
+.mv-16{
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+.mh-16{
+    margin-right: 16px;
+    margin-left: 16px;
+}
+
+.p-32{
+    padding: 32px;
+}
+.m-32{
+    margin: 32px;
+}
+
+.p-64{
+    padding: 64px;
+}
+.m-64{
+    margin: 64px;
+}
+@media (max-width: 600px) {
+    #main{
+        flex-direction: column;
+    }
+    #searchBar{
+        flex-grow:2;
+    }
 }

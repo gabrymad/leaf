@@ -1,0 +1,46 @@
+{
+    "endpoints":[
+        {
+            "mac_address": "3c:a0:67:13:ae:53",
+            "name": "Esp8266",
+            "sensor_list":[
+                {   
+                    "class_instance": "MoistureSensor",
+                    "name": "Umidita' terreno peperoncino",
+                    "current_entry":null,
+                    "sensor_reading_list":[],
+                    "is_soil_dry":null
+                },
+                {   
+                    "class_instance": "MoistureSensor",
+                    "name": "Umidita' terreno peperoncino 2",
+                    "current_entry":null,
+                    "sensor_reading_list":[],
+                    "is_soil_dry":null
+                },
+                {   
+                    "class_instance": "MoistureSensor",
+                    "name": "Umidita' terreno basilico",
+                    "current_entry":null,
+                    "sensor_reading_list":[],
+                    "is_soil_dry":null
+                }
+            ],
+            "endpoint_status_code":-1
+        },
+        {
+            "mac_address": "AA:BB:CC:00:11:22",
+            "name": "ArduinoNano",
+            "sensor_list":[
+                {   
+                    "class_instance": "MoistureSensor",
+                    "name": "Umidita' rose",
+                    "current_entry":null,
+                    "sensor_reading_list":[],
+                    "is_soil_dry":null
+                }
+            ],
+            "endpoint_status_code":-1
+        }
+    ]
+} 
