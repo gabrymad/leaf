@@ -23,7 +23,7 @@ input:active{
     outline: none;
     color: #fff;
 }
-input:focus, input:{
+input:focus{
     outline: none;
     color: #fff;
 }
