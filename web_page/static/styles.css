@@ -16,11 +16,14 @@ button:hover{
 }
 input{
     border-style: none;
+    outline: none;
+    color: #fff;
 }
 input:active{
     outline: none;
+    color: #fff;
 }
-input:focus{
+input:focus, input:{
     outline: none;
     color: #fff;
 }
@@ -51,7 +54,18 @@ input:focus{
 .align-stretch{
     align-items: stretch;
 }
-
+.self-stretch{
+    align-self: stretch;
+}
+.self-end{
+    align-self: end;
+}
+.align-end{
+    align-items:end;
+}
+.align-baseline{
+    align-items:baseline;
+}
 
 
 .p-4{
