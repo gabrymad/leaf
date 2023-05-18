@@ -89,7 +89,7 @@ class Endpoint:
             print('sensor name not found')
     
     
-    def sort_sensors(self, mode:str='name', reverse=False): # date, title, 
+    def sort_sensors(self, mode:str='name', reverse=False): # title, 
         if mode == 'name':
             return sorted(self.sensor_list, key=lambda x: x.name, reverse=reverse)
         print('not a valid mode')

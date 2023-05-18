@@ -1,11 +1,11 @@
-<a href="#" class="w3-card w3-white flex row m-16" style="min-width: 300px;max-width: 500px;">
+<a href="#" class="w3-card card-dark-theme flex row m-16 secondary-text-dark-theme" style="min-width: 300px;max-width: 500px;">
     <div class="flex justify-content-space-between mh-16" style="margin-top:16px;">
-        <span><strong>{{endpoint_name}}</strong></span>
+        <span class="primary-text-dark-theme"><strong>{{endpoint_name}}</strong></span>
         <span class="{{endpoint_status_color}}">{{' '}}</span>
     </div>
-    <span class=" mh-16">{{endpoint_addr}}</span>
+    <span class="mh-16">{{endpoint_addr}}</span>
     <div class="m-16">
-        <span><strong>Sensori</strong></span>
+        <span class="primary-text-dark-theme"><strong>Sensori</strong></span>
         {% for sensor_card in sensor_card_list%}
             {{sensor_card|safe}}
         {% endfor %}

@@ -1,0 +1,44 @@
+.background-dark-theme{
+    background-color: #242424;
+}
+.card-dark-theme{
+    background-color: #3a3a3a;
+}
+.secondary-text-dark-theme{
+    color: rgba(255, 255, 255, 0.7);
+}
+.primary-text-dark-theme{
+    color: #fff;
+}
+
+.no-data-text-theme{
+    color: rgb(202, 24, 202);
+}
+.good-data-text-theme{
+    color:seagreen;
+}
+.warning-data-text-theme{
+    color:goldenrod;
+}
+.warning-aggravated-data-text-theme{
+    color:rgb(190, 112, 10);
+}
+.danger-data-text-theme{
+    color:darkred;
+}
+
+.no-data-theme{
+    background-color: rgb(202, 24, 202);
+}
+.good-data-theme{
+    background-color:seagreen;
+}
+.warning-data-theme{
+    background-color:goldenrod;
+}
+.warning-aggravated-data-theme{
+    background-color:rgb(190, 112, 10);
+}
+.danger-data-theme{
+    background-color:darkred;
+}

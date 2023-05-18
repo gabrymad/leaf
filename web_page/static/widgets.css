@@ -1,0 +1,8 @@
+.add-button{
+    min-width: 100px;
+    max-width: 200px; 
+    aspect-ratio: 1/1; 
+    align-self: center;
+    border-style: none;
+    font-size: xx-large;
+}

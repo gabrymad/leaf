@@ -2,24 +2,62 @@
 <html lang="en">
 
     <head>
-        <title>My projects</title>
+        <title>Leaf</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="../static/styles.css">
+        <link rel="stylesheet" href="../static/colors.css">
+        <link rel="stylesheet" href="../static/widgets.css">
     </head>
-    <body style="font-family: Helvetica;">
+    <body class="background-dark-theme w3-mobile" style="font-family: Helvetica;">
         <nav class="w3-center">
-            <h1>
+            <h1 class="primary-text-dark-theme">
                 Endpoint List
             </h1>
-            <p>Endpoints with sensors connected to the network</p>
+            <p class="secondary-text-dark-theme">
+                Endpoints with sensors connected to the network
+            </p>
         </nav>
-        <div id="main" class="w3-container justify-content-center w3-light-gray flex wrap m-16">
+        <div class="w3-container card-dark-theme justify-content-center flex wrap m-16">
+            <div class="p-16">
+                <span class="secondary-text-dark-theme">Search bar</span>
+                <form class="flex">
+                    <input class="background-dark-theme" type="text" placeholder="Endpoint or sensor name" title="Filter"/>
+                    <button type="submit">Search</button>
+                    <button type="clear">Clear</button>
+                </form>
+            </div>
+            <div class="p-16">
+                <form class="flex">
+                    <div>
+                        <label class="secondary-text-dark-theme" for="sorting_method">Sort by</label><br>
+                        <select name="sorting_method">
+                            <option value="{{current_select}}" selected>{{current_select}}</option>
+                            {% for opt in options %}
+                                <option value="{{opt}}">{{opt}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mh-16">
+                        <label class="secondary-text-dark-theme" for="is_reversed">Descend</label><br>
+                        <input name="is_reversed" type="checkbox"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="main" class="w3-container justify-content-center flex wrap mh-16">
             {% for endpoint_card in endpoint_card_list %}
                 {{ endpoint_card|safe}}
             {% endfor %}
+            <!--
+<button class="m-16 p-16 add-button card-dark-theme">
+                <span class="secondary-text-dark-theme">+</span>
+            </button>
+            -->
+            
         </div>
+        
     </body>
 </html>

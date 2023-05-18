@@ -14,7 +14,16 @@ a{
 button:hover{
     cursor: pointer;
 }
-
+input{
+    border-style: none;
+}
+input:active{
+    outline: none;
+}
+input:focus{
+    outline: none;
+    color: #fff;
+}
 .row{
     flex-direction: column;
 }
@@ -36,7 +45,12 @@ button:hover{
 .justify-content-space-between{
     justify-content: space-between;
 }
-
+.justify-content-start{
+    justify-content:flex-start;
+}
+.align-stretch{
+    align-items: stretch;
+}
 
 
 

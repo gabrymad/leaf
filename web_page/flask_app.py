@@ -7,8 +7,7 @@ from logic.sensors import Endpoint
 app = Flask(__name__)
 endpoint_list:list[Endpoint] = []
 
-@app.route('/')
-def home():
+def _build_homepage():
     index_kwargs = {}
     eps = []
     for endpoint in endpoint_list:
@@ -18,7 +17,7 @@ def home():
             sensor_kwargs = {}
             sensor_kwargs['sensor_name'] = sensor.name+': '
             if sensor.sensor_bool_flag == None:
-                sensor_kwargs['text_color'] = 'w3-text-indigo'
+                sensor_kwargs['text_color'] = 'no-data-text-theme'
             elif sensor.sensor_bool_flag == True:
                 sensor_kwargs['text_color'] = 'w3-text-yellow'
             else:
@@ -27,7 +26,7 @@ def home():
             sensors_prev_list.append(render_template('sensor_preview.html', **sensor_kwargs))
 
         if endpoint.endpoint_status_code in [-1, None]:
-            color="w3-badge w3-round-medium w3-indigo"
+            color="w3-badge w3-round-medium no-data-theme"
         elif endpoint.endpoint_status_code == 0:
             color="w3-badge w3-round-medium w3-green"
         else:
@@ -39,6 +38,14 @@ def home():
         card_kwargs['endpoint_addr'] = endpoint.mac_address
         eps.append(render_template('card.html', **card_kwargs))  
     index_kwargs['endpoint_card_list'] = eps
+    index_kwargs['options'] = ['Sensor number']
+    index_kwargs['current_select'] = 'Name'
+    return index_kwargs
+
+
+@app.route('/')
+def home():
+    index_kwargs = _build_homepage()
     return render_template(
         'index.html',
         **index_kwargs
