@@ -2,7 +2,7 @@ import json
 from logic.sensors import Endpoint, MoistureSensor
 
 
-def from_json():
+def load_from_json():
     endpoints = []
     f = open('./web_page/data/endpoints.json')
     json_data = dict(json.load(f))

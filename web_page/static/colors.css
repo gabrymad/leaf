@@ -20,9 +20,6 @@
 .warning-data-text-theme{
     color:goldenrod;
 }
-.warning-aggravated-data-text-theme{
-    color:rgb(190, 112, 10);
-}
 .danger-data-text-theme{
     color:darkred;
 }
@@ -34,7 +31,7 @@
     background-color:seagreen;
 }
 .warning-data-theme{
-    background-color:goldenrod;
+    background-color:rgb(230, 208, 14);
 }
 .warning-aggravated-data-theme{
     background-color:rgb(190, 112, 10);

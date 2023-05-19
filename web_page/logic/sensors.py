@@ -1,7 +1,5 @@
 import datetime
 from abc import ABC, abstractmethod
-import os
-import json
 
 class DataEntry:
     def __init__(self) -> None:
@@ -67,6 +65,10 @@ class Endpoint:
         self.endpoint_status_code:int = None
     
 
+    def get_num_sensors(self):
+        return len(self.sensor_list)
+    
+    
     def add_sensor(self, new_sensor:Sensor) -> None:
         for sensor in self.sensor_list:
             if sensor.name == new_sensor.name:
@@ -87,25 +89,32 @@ class Endpoint:
             print('sensor removed')
         else:
             print('sensor name not found')
-    
-    
-    def sort_sensors(self, mode:str='name', reverse=False): # title, 
-        if mode == 'name':
-            return sorted(self.sensor_list, key=lambda x: x.name, reverse=reverse)
-        print('not a valid mode')
-        return None
-
-
-    def filter_sensors(self, mode:str='name', value:str=''):
-        if mode=='name':
-            return list(filter(lambda x: value.lower() in x.name.lower(), self.sensor_list))
-        print('not a valid mode')
-        return None
                     
     
     def check_status(self):
         self.endpoint_status_code = 0
 
+
+class EndpointList:
+    def __init__(self) -> None:
+        self.endpoint_list:list[Endpoint] = []
+        self.search_query_endpoint_list:list[Endpoint] = None
+        
+        self.current_search_text = ''
+        self.current_sort_method = 'Num sensors'
+        self.current_is_reversed = None
     
+    def set_endpoint_list(self, endpoint_list:list[Endpoint]):
+        self.endpoint_list = None
+        self.endpoint_list = endpoint_list
+    
+    def search(self, search_text:str):
+        search_text = search_text.lstrip()
+        search_text = search_text.rstrip()
+        if search_text == self.current_search_text:
+            pass
+        else:
+            self.search_query_endpoint_list = list(filter(lambda x: search_text.lower() in x.name.lower(), self.endpoint_list))
+            self.current_search_text = search_text
 
     

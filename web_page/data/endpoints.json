@@ -41,6 +41,27 @@
                 }
             ],
             "endpoint_status_code":-1
+        },
+        {
+            "mac_address": "01:23:ab:cd:45:67",
+            "name": "MKR2000",
+            "sensor_list":[
+                {   
+                    "class_instance": "MoistureSensor",
+                    "name": "Sensore 1",
+                    "current_entry":null,
+                    "sensor_reading_list":[],
+                    "is_soil_dry":null
+                },
+                {   
+                    "class_instance": "MoistureSensor",
+                    "name": "Sensore 2",
+                    "current_entry":null,
+                    "sensor_reading_list":[],
+                    "is_soil_dry":null
+                }
+            ],
+            "endpoint_status_code":-1
         }
     ]
 } 
