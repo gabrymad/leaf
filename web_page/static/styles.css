@@ -11,6 +11,10 @@ img{
 a{
     text-decoration: none;
 }
+button, button:active{
+    outline: none;
+    border-style: none;
+}
 button:hover{
     cursor: pointer;
 }
@@ -48,8 +52,14 @@ input:focus{
 .justify-content-space-between{
     justify-content: space-between;
 }
+.justify-content-space-evenly{
+    justify-content: space-evenly;
+}
 .justify-content-start{
     justify-content:flex-start;
+}
+.justify-content-end{
+    justify-content:flex-end;
 }
 .align-stretch{
     align-items: stretch;
@@ -134,11 +144,14 @@ input:focus{
 .m-64{
     margin: 64px;
 }
+#menu{
+    justify-content:center;
+}
 @media (max-width: 600px) {
     #main{
         flex-direction: column;
     }
-    #searchBar{
-        flex-grow:2;
+    #menu{
+        justify-content: center;
     }
 }

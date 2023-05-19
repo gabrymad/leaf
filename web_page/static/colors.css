@@ -4,6 +4,9 @@
 .card-dark-theme{
     background-color: #3a3a3a;
 }
+.secondary-dark-theme{
+    background-color: rgba(255, 255, 255, 0.7);
+}
 .secondary-text-dark-theme{
     color: rgba(255, 255, 255, 0.7);
 }
@@ -38,4 +41,7 @@
 }
 .danger-data-theme{
     background-color:darkred;
+}
+.primary-icon-theme{
+    background-color:darkcyan;
 }
