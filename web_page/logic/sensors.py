@@ -99,22 +99,11 @@ class EndpointList:
     def __init__(self) -> None:
         self.endpoint_list:list[Endpoint] = []
         self.search_query_endpoint_list:list[Endpoint] = None
-        
-        self.current_search_text = ''
-        self.current_sort_method = 'Num sensors'
-        self.current_is_reversed = None
     
     def set_endpoint_list(self, endpoint_list:list[Endpoint]):
         self.endpoint_list = None
         self.endpoint_list = endpoint_list
     
-    def search(self, search_text:str):
-        search_text = search_text.lstrip()
-        search_text = search_text.rstrip()
-        if search_text == self.current_search_text:
-            pass
-        else:
-            self.search_query_endpoint_list = list(filter(lambda x: search_text.lower() in x.name.lower(), self.endpoint_list))
-            self.current_search_text = search_text
-
+    def is_search_null(self):
+        return self.search_query_endpoint_list == None
     
