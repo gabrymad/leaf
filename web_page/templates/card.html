@@ -1,22 +1,25 @@
-<a href="#" class="w3-card card-dark-theme flex row m-16 secondary-text-dark-theme" style="min-width: 300px;max-width: 500px;">
+<div class="w3-card card-dark-theme m-16 endpoint-card">
     <div class="flex col justify-content-end m-16">
-        <button href="#" class="w3-badge primary-icon-theme w3-round-small mh-8">
+        <a href="edit-endpoint/{{endpoint_name}}" class="w3-badge primary-theme w3-round-small mh-8">
             Modify
-        </button>
-        <button href="#" class="w3-badge danger-data-theme w3-round-small">
+        </a>
+        <a href="delete-endpoint/{{endpoint_name}}" class="w3-badge danger-theme w3-round-small">
             Delete
-        </button>
+        </a>
     </div>
-    <div class="flex justify-content-space-between mh-16">
+    <a href={{endpoint_page_path}} class="flex row secondary-text-dark-theme">
+        <div class="flex justify-content-space-between mh-16">
 
-        <span class="primary-text-dark-theme"><strong>{{endpoint_name}}</strong></span>
-        <span class="{{endpoint_status_color}}">{{' '}}</span>
-    </div>
-    <span class="mh-16">{{endpoint_addr}}</span>
-    <div class="m-16">
-        <span class="primary-text-dark-theme"><strong>Sensors</strong></span>
-        {% for sensor_card in sensor_card_list%}
-            {{sensor_card|safe}}
-        {% endfor %}
-    </div>
-</a>
+            <span class="primary-text-dark-theme"><strong>{{endpoint_name}}</strong></span>
+            <span class="{{endpoint_status_color}}">{{' '}}</span>
+        </div>
+        <span class="mh-16">{{endpoint_addr}}</span>
+        <div class="m-16">
+            <span class="primary-text-dark-theme"><strong>Sensors</strong></span>
+            {% for sensor_card in sensor_card_list%}
+                {{sensor_card|safe}}
+            {% endfor %}
+        </div>
+    </a>
+</div>
+    

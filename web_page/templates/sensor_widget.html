@@ -1,0 +1,35 @@
+<div class="w3-card card-dark-theme m-16 endpoint-card">
+    <div class="flex col justify-content-end m-16">
+        <a href="edit-endpoint/{{endpoint_name}}" class="w3-badge primary-theme w3-round-small mh-8 p-8">
+            Modify
+        </a>
+        <a href="delete-endpoint/{{endpoint_name}}" class="w3-badge danger-theme w3-round-small p-8">
+            Delete
+        </a>
+    </div>
+    <div class="w3-card card-dark-theme m-16 p-16 w3-center">
+        <span class="primary-text-dark-theme"style="font-size: large;">
+            {{sensor_name}}
+        </span>
+        <span class="secondary-text-dark-theme"style="font-size: large;">
+            {{sensor_type}}
+        </span>
+        <br> 
+        <div class="flex mv-16">
+            <span class="primary-text-dark-theme">
+                Raw value:
+            </span>
+            <span class="secondary-text-dark-theme">
+                {{sensor_raw_value}}
+            </span>
+        </div>
+        <div class="flex mv-16">
+            <span class="primary-text-dark-theme">
+                Value
+            </span>
+            <span class="secondary-text-dark-theme">
+                {{sensor_value}}
+            </span>
+        </div>
+    </div>
+</div>

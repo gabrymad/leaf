@@ -30,18 +30,15 @@
 .no-data-theme{
     background-color: rgb(202, 24, 202);
 }
-.good-data-theme{
+.good-theme{
     background-color:seagreen;
 }
-.warning-data-theme{
+.warning-theme{
     background-color:rgb(230, 208, 14);
 }
-.warning-aggravated-data-theme{
-    background-color:rgb(190, 112, 10);
-}
-.danger-data-theme{
+.danger-theme{
     background-color:darkred;
 }
-.primary-icon-theme{
+.primary-theme{
     background-color:darkcyan;
 }

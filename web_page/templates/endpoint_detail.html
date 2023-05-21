@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Leaf - {{endpoint_name}}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="../static/styles.css">
+        <link rel="stylesheet" href="../static/colors.css">
+        <link rel="stylesheet" href="../static/widgets.css">
+    </head>
+    <body class="background-dark-theme w3-mobile " style="font-family: Helvetica;">
+        <nav class="card-dark-theme sticky p-8">
+            <div class="flex align-baseline justify-content-space-between">
+                <a href="/" class="primary-text-dark-theme" style="font-size: x-large;">
+                    <span >&#x2190</span>
+                </a>
+                <div class="flex col justify-content-end align-baseline">
+                    <span class="primary-text-dark-theme mh-8"style="font-size: large;">
+                        {{endpoint_name}}
+                    </span>
+                    <a href="/edit-endpoint/{{endpoint_name}}" class="w3-badge primary-theme w3-round-small mh-8 p-8">
+                        Modify
+                    </a>
+                    <a href="/delete-endpoint/{{endpoint_name}}" class="w3-badge danger-theme w3-round-small p-8">
+                        Delete
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <div class="w3-card card-dark-theme m-16 p-16 w3-center">
+            <span class="primary-text-dark-theme"style="font-size: large;">
+                {{endpoint_name}}
+            </span>
+            <br>
+            <span class="secondary-text-dark-theme">
+                {{endpoint_mac_address}}
+            </span>  
+            <div class="flex row mv-16">
+                <span class="primary-text-dark-theme">
+                    Last update
+                </span>
+                <span class="secondary-text-dark-theme">
+                    {{endpoint_last_update}}
+                </span>
+            </div>
+            <div class="flex row mv-16">
+                <span class="primary-text-dark-theme">
+                    Running time
+                </span>
+                <span class="secondary-text-dark-theme">
+                    {{running_time}}
+                </span>
+            </div>
+            <span class="{{endpoint_status_color}} w3-round-small p-8">
+                {{endpoint_status_message}}
+            </span>
+        </div>
+    </body>
+</html>

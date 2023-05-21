@@ -1,8 +1,17 @@
-.add-button{
-    min-width: 100px;
-    max-width: 200px; 
-    aspect-ratio: 1/1; 
-    align-self: center;
-    border-style: none;
-    font-size: xx-large;
+.endpoint-card{
+    min-width: 200px;
+    max-width: 400px;
+}
+.custom-widget{
+    justify-content: space-between;
+}
+#hide{
+    visibility: hidden;
+}
+@media (max-width: 600px) {
+    .custom-widget{
+        justify-content: space-between;
+        padding-left:2%;
+        padding-right:2%;
+    }
 }

@@ -55,7 +55,7 @@ def load_from_json():
     for endpoint_dict in endpoint_dict_list:
         ep = Endpoint()
         ep.mac_address = endpoint_dict['mac_address']
-        ep.name = endpoint_dict['name']
+        ep.set_name(endpoint_dict['name'])
         dict_sensor_list = endpoint_dict['sensor_list']
         for sensor_dict in dict_sensor_list:
             name = sensor_dict['name']

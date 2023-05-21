@@ -35,11 +35,12 @@ def _build_homepage():
         elif endpoint.endpoint_status_code == 0:
             color="w3-badge w3-round-medium w3-green"
         elif endpoint.endpoint_status_code == 1:
-            color="w3-badge w3-round-medium warning-data-theme"
+            color="w3-badge w3-round-medium warning-theme"
         else:
-            color="w3-badge w3-round-medium danger-data-theme"
+            color="w3-badge w3-round-medium danger-theme"
 
         card_kwargs['endpoint_status_color'] = color
+        card_kwargs['endpoint_page_path'] = endpoint.endpoint_page_path
         card_kwargs['sensor_card_list'] = sensors_prev_list
         card_kwargs['endpoint_name'] = endpoint.name
         card_kwargs['endpoint_addr'] = endpoint.mac_address
@@ -59,7 +60,6 @@ def home():
         'index.html',
         **index_kwargs
     )
-
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -81,6 +81,43 @@ def sort():
         endpoints.endpoint_list = output_list
     return redirect('/')
 
+
+@app.route('/endpoint/<endpoint_name>')
+def endpoint_detail(endpoint_name:str):
+    kwargs = {}
+    endpoint = endpoints.get_endpoint_by_name(endpoint_name)
+    kwargs['endpoint_name'] = endpoint_name
+    kwargs['endpoint_mac_address'] = endpoint.mac_address
+    kwargs['endpoint_last_update'] = '21/05/2023 23:21'
+    kwargs['num_sensors'] = endpoint.get_num_sensors()
+    kwargs['running_time'] = '1 Hour 24 Minutes'
+
+    if endpoint.endpoint_status_code in [-1, None]:
+        color="no-data-theme"
+        msg = 'No data'
+    elif endpoint.endpoint_status_code == 0:
+        color="w3-green"
+        msg = 'Up and running'
+    elif endpoint.endpoint_status_code == 1:
+        color="warning-theme"
+        msg = 'Probably disconnected'
+    else:
+        color="danger-theme"
+        msg = 'Disconnected or damaged'
+
+    kwargs['endpoint_status_color'] = color
+    kwargs['endpoint_status_message'] = msg
+    return render_template('endpoint_detail.html', **kwargs)
+
+@app.route('/endpoint/edit-endpoint/<endpoint_name>', methods=['GET', 'POST'])
+@app.route('/edit-endpoint/<endpoint_name>', methods=['GET', 'POST'])
+def add_modify_endpoint(endpoint_name:str):
+    kwargs = {}
+    kwargs['endpoint_name'] = endpoint_name
+    if endpoint_name == 'new':
+        return f'new endpoint'
+    else:
+        return f'endpoint already present, precompiled fields | name: {endpoint_name}'
 
 if __name__ == '__main__':
     endpoint_list = load_from_json()

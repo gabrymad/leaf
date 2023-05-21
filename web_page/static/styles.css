@@ -137,7 +137,10 @@ input:focus{
 .m-32{
     margin: 32px;
 }
-
+.mh-32{
+    margin-right: 32px;
+    margin-left: 32px;
+}
 .p-64{
     padding: 64px;
 }

@@ -1,3 +1,4 @@
+from __future__ import annotations
 import datetime
 from abc import ABC, abstractmethod
 
@@ -59,11 +60,16 @@ class MoistureSensor(Sensor):
 
 class Endpoint:
     def __init__(self, name:str=None, mac_address:str=None) -> None:
-        self.mac_address:str = name
-        self.name:str = mac_address
+        self.mac_address:str = mac_address
+        self.name:str = name
         self.sensor_list:list[Sensor] = []
         self.endpoint_status_code:int = None
+        self.endpoint_page_path = None
     
+
+    def set_name(self, name:str):
+        self.name = name
+        self.endpoint_page_path = 'endpoint/'+name
 
     def get_num_sensors(self):
         return len(self.sensor_list)
@@ -93,7 +99,9 @@ class Endpoint:
     
     def check_status(self):
         self.endpoint_status_code = 0
-
+    
+    def is_equals(self, endpoint:Endpoint):
+        return self.name == endpoint.name and self.mac_address == endpoint.mac_address
 
 class EndpointList:
     def __init__(self) -> None:
@@ -103,6 +111,19 @@ class EndpointList:
     def set_endpoint_list(self, endpoint_list:list[Endpoint]):
         self.endpoint_list = None
         self.endpoint_list = endpoint_list
+
+    def add_endpoint(self, new_endpoint:Endpoint):
+        for endpoint in self.endpoint_list:
+            if endpoint.is_equals(new_endpoint):
+                print('endpoint already present')
+                return
+        self.endpoint_list.append(new_endpoint)
+
+    def get_endpoint_by_name(self, endpoint_name:str):
+        for endpoint in self.endpoint_list:
+            if endpoint_name == endpoint.name:
+                return endpoint
+        print('not endpoint found for:', endpoint_name)
     
     def is_search_null(self):
         return self.search_query_endpoint_list == None
