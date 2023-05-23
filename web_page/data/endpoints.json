@@ -7,26 +7,38 @@
                 {   
                     "class_instance": "MoistureSensor",
                     "name": "Umidita' terreno peperoncino",
-                    "current_entry":null,
+                    "current_entry":{
+                        "date_time": "23/05/2023 10:28",
+                        "raw_value": 500,
+                        "value": 50.0
+                    },
                     "sensor_reading_list":[],
-                    "is_soil_dry":null
+                    "is_soil_dry":false
                 },
                 {   
                     "class_instance": "MoistureSensor",
                     "name": "Umidita' terreno peperoncino 2",
-                    "current_entry":null,
+                    "current_entry":{
+                        "date_time": "23/05/2023 10:28",
+                        "raw_value": 1020,
+                        "value": 1.0
+                    },
                     "sensor_reading_list":[],
-                    "is_soil_dry":null
+                    "is_soil_dry":true
                 },
                 {   
                     "class_instance": "MoistureSensor",
                     "name": "Umidita' terreno basilico",
-                    "current_entry":null,
+                    "current_entry":{
+                        "date_time": "23/05/2023 10:28",
+                        "raw_value": 200,
+                        "value": 90.0
+                    },
                     "sensor_reading_list":[],
-                    "is_soil_dry":null
+                    "is_soil_dry":false
                 }
             ],
-            "endpoint_status_code":-1
+            "endpoint_status_code":0
         },
         {
             "mac_address": "AA:BB:CC:00:11:22",

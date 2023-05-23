@@ -1,0 +1,39 @@
+<html lang="en">
+
+    <head>
+        <title>Leaf</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    </head>
+    <body>
+        <nav class="card-dark-theme sticky p-8">
+            <div class="flex align-baseline">
+                <a href="/" class="primary-text-dark-theme" style="font-size: x-large;">
+                    <span >&#x2190</span>
+                </a>
+            </div>
+        </nav>
+        <div>
+            <form method="POST" action="/save-endpoint">
+                <div>
+                    <label for="endpoint-name-input">Endpoint Name</label><br>
+                    <input name="endpoint-name-input" placeholder="My endpoint name" type="text" value="{{input_endpoint_name}}"/>
+                </div>
+                <div>
+                    <label for="endpoint-address-input1">Endpoint Mac Address</label><br>
+                    <input name="endpoint-address-input1" size="1" maxlength="2" placeholder="ab" type="text" value="{{input_endpoint_mac_address}}"/>:
+                    <input name="endpoint-address-input2" size="1" maxlength="2" placeholder="cd" type="text" value="{{input_endpoint_mac_address}}"/>:
+                    <input name="endpoint-address-input3" size="1" maxlength="2" placeholder="ef" type="text" value="{{input_endpoint_mac_address}}"/>:
+                    <input name="endpoint-address-input4" size="1" maxlength="2" placeholder="12" type="text" value="{{input_endpoint_mac_address}}"/>:
+                    <input name="endpoint-address-input5" size="1" maxlength="2" placeholder="34" type="text" value="{{input_endpoint_mac_address}}"/>:
+                    <input name="endpoint-address-input6" size="1" maxlength="2" placeholder="56" type="text" value="{{input_endpoint_mac_address}}"/>
+                </div>
+                <button type="submit" onclick="this.form.submit()">
+                    Save Endpoint
+                </button>
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,19 +1,20 @@
 from dataclasses import dataclass
 import json
-from logic.sensors import Endpoint, MoistureSensor
+from logic.sensors import Endpoint, MoistureSensor, DataEntry
 
 
 class Search:
     def __init__(self) -> None:
         self.current_query_text = ''
 
-    def search(self, list_container:list[Endpoint], search_text:str):
+    def set_search(self, search_text:str):
         search_text = search_text.lstrip()
         search_text = search_text.rstrip()
-        if search_text == self.current_query_text:
-            return None
         self.current_query_text = search_text
-        return list(filter(lambda x: search_text.lower() in x.name.lower(), list_container))
+
+    def search(self, list_container:list[Endpoint]):
+        return list(filter(lambda x: self.current_query_text.lower() in x.name.lower(), list_container))
+        
 
 class Sort:
     def __init__(self) -> None:
@@ -61,6 +62,14 @@ def load_from_json():
             name = sensor_dict['name']
             if sensor_dict['class_instance'] == 'MoistureSensor':
                 sensor = MoistureSensor(name)
+                if not sensor_dict['current_entry'] == None:
+                    entry_dict = sensor_dict['current_entry']
+                    current_entry = DataEntry()
+                    current_entry.date_time = entry_dict['date_time']
+                    current_entry.raw_value =  entry_dict['raw_value']
+                    current_entry.value =  entry_dict['value']
+                    sensor.update(current_entry)
+                sensor.is_soil_dry = sensor_dict['is_soil_dry']
             ep.add_sensor(sensor)
         ep.endpoint_status_code = endpoint_dict['endpoint_status_code']
         endpoints.append(ep)

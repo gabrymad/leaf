@@ -112,7 +112,7 @@ input:focus{
     padding: 16px;
 }
 .pv-16{
-    padding-top: 16;
+    padding-top: 16px;
     padding-bottom: 16px;
 }
 .ph-16{
@@ -150,11 +150,19 @@ input:focus{
 #menu{
     justify-content:center;
 }
+#endpoint-details-widget{
+    gap: 32px;
+    flex-direction: row;
+}
 @media (max-width: 600px) {
     #main{
         flex-direction: column;
     }
     #menu{
         justify-content: center;
+    }
+    #endpoint-details-widget{
+        flex-direction: column;
+        gap: 8px;
     }
 }

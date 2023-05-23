@@ -1,0 +1,38 @@
+<div class="w3-card m-16 card-dark-theme  endpoint-card">
+    <div class="flex col justify-content-space-between p-16">
+        <span class="secondary-text-dark-theme"style="font-size: large;">
+            {{sensor_type}}
+        </span>
+        <div class="flex col justify-content-end">
+            <a href="./{{endpoint_name}}/edit-sensor/{{sensor_name}}" class="w3-badge primary-theme w3-round-small mh-8">
+                Modify
+            </a>
+            <a href="./{{endpoint_name}}/delete-sensor/{{sensor_name}}" class="w3-badge danger-theme w3-round-small">
+                Delete
+            </a>
+        </div>
+    </div>
+    <div class="w3-center">
+        <span class="primary-text-dark-theme"style="font-size: large;">
+            {{sensor_name}}
+        </span>
+    </div>
+    <div class="p-16">
+        <div class="flex justify-content-space-between">
+            <span class="secondary-text-dark-theme">
+                Raw value:
+            </span>
+            <span class="primary-text-dark-theme">
+                {{sensor_raw_value}}
+            </span>
+        </div>
+        <div class="flex justify-content-space-between">
+            <span class="secondary-text-dark-theme">
+                Current Humidity:
+            </span>
+            <span class="primary-text-dark-theme {{value_text_color}}">
+                {{sensor_value}}
+            </span>
+        </div>
+    </div>
+</div>

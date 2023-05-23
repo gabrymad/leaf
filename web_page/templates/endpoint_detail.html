@@ -17,45 +17,61 @@
                     <span >&#x2190</span>
                 </a>
                 <div class="flex col justify-content-end align-baseline">
-                    <span class="primary-text-dark-theme mh-8"style="font-size: large;">
-                        {{endpoint_name}}
-                    </span>
-                    <a href="/edit-endpoint/{{endpoint_name}}" class="w3-badge primary-theme w3-round-small mh-8 p-8">
-                        Modify
-                    </a>
-                    <a href="/delete-endpoint/{{endpoint_name}}" class="w3-badge danger-theme w3-round-small p-8">
+                    <a href="./delete-endpoint/{{endpoint_name}}" class="w3-badge danger-theme w3-round-small p-8">
                         Delete
                     </a>
                 </div>
             </div>
         </nav>
         <div class="w3-card card-dark-theme m-16 p-16 w3-center">
-            <span class="primary-text-dark-theme"style="font-size: large;">
-                {{endpoint_name}}
-            </span>
-            <br>
-            <span class="secondary-text-dark-theme">
-                {{endpoint_mac_address}}
-            </span>  
-            <div class="flex row mv-16">
-                <span class="primary-text-dark-theme">
-                    Last update
+            <div class="flex row justify-content-center">
+                <span class="secondary-text-dark-theme"style="font-size: x-large;">
+                    {{endpoint_name}}
                 </span>
-                <span class="secondary-text-dark-theme">
-                    {{endpoint_last_update}}
+                <span class="primary-text-dark-theme">
+                    {{endpoint_mac_address}}
                 </span>
             </div>
-            <div class="flex row mv-16">
-                <span class="primary-text-dark-theme">
-                    Running time
-                </span>
-                <span class="secondary-text-dark-theme">
-                    {{running_time}}
-                </span>
+            <div id="endpoint-details-widget" class="flex mv-16 justify-content-center">
+                <div class="flex row">
+                    <span class="secondary-text-dark-theme">
+                        First connection
+                    </span>
+                    <span class="primary-text-dark-theme">
+                        {{endpoint_first_update}}
+                    </span>
+                </div>
+                <div class="flex row">
+                    <span class="secondary-text-dark-theme">
+                        Last update
+                    </span>
+                    <span class="primary-text-dark-theme">
+                        {{endpoint_last_update}}
+                    </span>
+                </div>
+                <div class="flex row">
+                    <span class="secondary-text-dark-theme">
+                        Running time
+                    </span>
+                    <span class="primary-text-dark-theme">
+                        {{running_time}}
+                    </span>
+                </div>
             </div>
+            
             <span class="{{endpoint_status_color}} w3-round-small p-8">
                 {{endpoint_status_message}}
             </span>
         </div>
+        <div class="w3-center">
+            <span class="secondary-text-dark-theme">Endpoint sensors:</span>
+            <span class="primary-text-dark-theme">{{num_sensors}}</span>
+        </div>
+        <div id="main" class="w3-container justify-content-center flex wrap">
+            {% for sensor_card in sensor_cards %}
+                {{sensor_card|safe}}
+            {% endfor %}
+        </div>
+        
     </body>
 </html>
