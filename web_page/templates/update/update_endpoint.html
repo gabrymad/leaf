@@ -1,13 +1,17 @@
 <html lang="en">
 
     <head>
-        <title>Leaf</title>
+        <title>Leaf - Insert Endpoint</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="../static/styles.css">
+        <link rel="stylesheet" href="../static/colors.css">
+        <link rel="stylesheet" href="../static/widgets.css">
+
     </head>
-    <body>
+    <body class="background-dark-theme w3-mobile">
         <nav class="card-dark-theme sticky p-8">
             <div class="flex align-baseline">
                 <a href="/" class="primary-text-dark-theme" style="font-size: x-large;">
@@ -15,26 +19,37 @@
                 </a>
             </div>
         </nav>
-        <div>
+        <div class="w3-container card-dark-theme flex justify-content-center m-16">
             <form method="POST" action="/save-endpoint">
-                <div>
-                    <label for="endpoint-name-input">Endpoint Name</label><br>
-                    <input name="endpoint-name-input" placeholder="My endpoint name" type="text" value="{{input_endpoint_name}}"/>
-                </div>
-                <div>
-                    <label for="endpoint-address-input1">Endpoint Mac Address</label><br>
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-                    <input class="input_mac" name="endpoint-address-input1" size="1" maxlength="2" placeholder="ab" type="text"/>:
-                    <input class="input_mac" name="endpoint-address-input2" size="1" maxlength="2" placeholder="cd" type="text"/>:
-                    <input class="input_mac" name="endpoint-address-input3" size="1" maxlength="2" placeholder="ef" type="text"/>:
-                    <input class="input_mac" name="endpoint-address-input4" size="1" maxlength="2" placeholder="12" type="text"/>:
-                    <input class="input_mac" name="endpoint-address-input5" size="1" maxlength="2" placeholder="34" type="text"/>:
-                    <input class="input_mac" name="endpoint-address-input6" size="1" maxlength="2" placeholder="56" type="text"/>
+                <div class="m-16">
+                    <label class="secondary-text-dark-theme mh-8" for="endpoint-name-input">Endpoint Name</label><br>
+                    <div class="flex justify-content-center">
+                        <input id="endpoint-name-input" name="endpoint-name-input" class="background-dark-theme p-8 mh-8 w3-center" placeholder="My endpoint name" type="text"/>
+                    </div>
                     
                 </div>
-                <button type="submit" onclick="this.form.submit()">
-                    Save Endpoint
-                </button>
+                <div class="m-16">
+                    <label class="secondary-text-dark-theme m-8" for="endpoint-address-input1">Endpoint Mac Address</label><br>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                    <input class="input_mac" name="endpoint-address-input1" size="3" maxlength="2" placeholder="ab" type="text"/>
+                    <span class="secondary-text-dark-theme w3-center">:</span>
+                    <input class="input_mac" name="endpoint-address-input2" size="3" maxlength="2" placeholder="cd" type="text"/>
+                    <span class="secondary-text-dark-theme w3-center">:</span>
+                    <input class="input_mac" name="endpoint-address-input3" size="3" maxlength="2" placeholder="ef" type="text"/>
+                    <span class="secondary-text-dark-theme w3-center">:</span>
+                    <input class="input_mac" name="endpoint-address-input4" size="3" maxlength="2" placeholder="12" type="text"/>
+                    <span class="secondary-text-dark-theme w3-center">:</span>
+                    <input class="input_mac" name="endpoint-address-input5" size="3" maxlength="2" placeholder="34" type="text"/>
+                    <span class="secondary-text-dark-theme w3-center">:</span>
+                    <input class="input_mac" name="endpoint-address-input6" size="3" maxlength="2" placeholder="56" type="text"/>
+                    
+                </div>
+                <div class="flex justify-content-center m-16 ">
+                    <button class="p-8" type="submit" onclick="this.form.submit()">
+                        Save Endpoint
+                    </button>
+                </div>
+                
             </form>
         </div>
     </body>

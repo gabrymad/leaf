@@ -192,6 +192,12 @@ class EndpointList:
             return
         print('endpoint not removed')
     
+    def delete_sensor_from_endpoint(self, endpoint_name:str, sensor_name:str):
+        for endpoint in self.endpoint_list:
+            if endpoint_name == endpoint.name:
+                endpoint.delete_sensor_by_name(sensor_name)
+                break
+    
     def update(self, mac_address:str, sensor_id:int, new_entry:DataEntry):
         for endpoint in self.endpoint_list:
             if endpoint.mac_address == mac_address:

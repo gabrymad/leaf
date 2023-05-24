@@ -8,6 +8,9 @@ img{
     object-fit: cover;
     overflow:hidden;
 }
+body{
+    font-family: 'Helvetica';
+}
 a{
     text-decoration: none;
 }
