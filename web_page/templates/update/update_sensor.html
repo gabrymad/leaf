@@ -1,0 +1,31 @@
+<html lang="en">
+
+    <head>
+        <title>Leaf - New Sensor</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    </head>
+    <body>
+        <nav class="card-dark-theme sticky p-8">
+            <div class="flex align-baseline">
+                <a href="/" class="primary-text-dark-theme" style="font-size: x-large;">
+                    <span >&#x2190</span>
+                </a>
+            </div>
+        </nav>
+        <div>
+            <form method="POST" action="/save-sensor">
+                <div>
+                    <label for="sensor-name-input">Sensor Name</label><br>
+                    <input name="sensor-name-input" placeholder="My sensor name" type="text" value=""/>
+                    <input name="endpoint-name-input" type="hidden" value="{{input_endpoint_name}}"/>
+                </div>
+                <button type="submit" onclick="this.form.submit()">
+                    Save Sensor
+                </button>
+            </form>
+        </div>
+    </body>
+</html>

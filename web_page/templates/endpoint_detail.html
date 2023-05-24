@@ -65,7 +65,10 @@
         </div>
         <div class="w3-center">
             <span class="secondary-text-dark-theme">Endpoint sensors:</span>
-            <span class="primary-text-dark-theme">{{num_sensors}}</span>
+            <span class="primary-text-dark-theme">{{num_sensors}}</span><br>
+            <a type="button" href="/endpoint/{{endpoint_name}}/edit-sensor/new" class="p-8 m-8 w3-btn secondary-dark-theme">
+                Add new Sensor
+            </a>
         </div>
         <div id="main" class="w3-container justify-content-center flex wrap">
             {% for sensor_card in sensor_cards %}

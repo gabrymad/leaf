@@ -68,9 +68,24 @@ def home():
 @app.route('/save-endpoint', methods=['POST'])
 def save_endpoint():
     endpoint_name = request.form.get('endpoint-name-input')
-    endpoint_address = request.form.get('endpoint-address-input')
+    a1 = request.form.get('endpoint-address-input1')
+    a2 = request.form.get('endpoint-address-input2')
+    a3 = request.form.get('endpoint-address-input3')
+    a4 = request.form.get('endpoint-address-input4')
+    a5 = request.form.get('endpoint-address-input5')
+    a6 = request.form.get('endpoint-address-input6')
+    endpoint_address = a1+':'+a2+':'+a3+':'+a4+':'+a5+':'+a6
     endpoint = Endpoint(endpoint_name, endpoint_address)
+    print(endpoint.endpoint_page_path)
     endpoints.add_endpoint(endpoint)
+    return redirect('/')
+
+@app.route('/save-sensor', methods=['POST'])
+def save_sensor():
+    sensor_name = request.form.get('sensor-name-input')
+    endpoint_name = request.form.get('endpoint-name-input')
+    sensor = MoistureSensor(sensor_name, 0)
+    endpoints.add_sensor_to_endpoint(endpoint_name, sensor)
     return redirect('/')
 
 
@@ -153,26 +168,14 @@ def endpoint_detail(endpoint_name:str):
 @app.route('/endpoint/<endpoint_name>/edit-sensor/<sensor_name>', methods=['GET', 'POST'])
 def add_modify_sensor(endpoint_name:str, sensor_name:str):
     kwargs = {}
-    kwargs['endpoint_name'] = endpoint_name
-    kwargs['sensors_name'] = sensor_name
-    if sensor_name == 'new':
-        return f'new sensor'
-    else:
-        return f'sensor already present, precompiled fields | name: {sensor_name}'
+    kwargs['input_endpoint_name'] = endpoint_name
+    return render_template('/update/update_sensor.html', **kwargs)
 
 
 @app.route('/endpoint/edit-endpoint/<endpoint_name>', methods=['GET', 'POST'])
 @app.route('/edit-endpoint/<endpoint_name>', methods=['GET', 'POST'])
 def add_modify_endpoint(endpoint_name:str):
-    kwargs = {}
-    ep = endpoints.get_endpoint_by_name(endpoint_name)
-    kwargs['endpoint_name'] = endpoint_name
-    if endpoint_name == 'new':
-        kwargs['input_endpoint_name'] = ''
-    else:
-        kwargs['input_endpoint_name'] = endpoint_name
-        kwargs['input_endpoint_name'] = ep.mac_address
-    return render_template('/update/update_endpoint.html', **kwargs)
+    return render_template('/update/update_endpoint.html')
 
 @app.route('/endpoint/delete-endpoint/<endpoint_name>', methods=['GET', 'POST'])
 @app.route('/delete-endpoint/<endpoint_name>', methods=['GET', 'POST'])

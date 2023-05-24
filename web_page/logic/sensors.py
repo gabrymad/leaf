@@ -70,11 +70,13 @@ class MoistureSensor(Sensor):
 
 class Endpoint:
     def __init__(self, name:str=None, mac_address:str=None) -> None:
+        name = name.lstrip()
+        name = name.rstrip()
         self.mac_address:str = mac_address
         self.name:str = name
         self.sensor_list:list[Sensor] = []
         self.endpoint_status_code:int = None
-        self.endpoint_page_path = 'endpoint/'+name
+        self.endpoint_page_path = 'endpoint/'+name.replace(' ', '%20')
         self.available_sensor_ids = [i for i in range(5)]
         
         self.first_update:datetime.datetime = None
@@ -123,7 +125,6 @@ class Endpoint:
         sensor_id = self.available_sensor_ids.pop(0)
         new_sensor.id = sensor_id
         self.sensor_list.append(new_sensor)
-        # self.sensor_list.sort(key=lambda x: x.name, reverse=True)
     
     def delete_sensor_by_name(self, sensor_name:str):
         is_found = False
@@ -173,6 +174,11 @@ class EndpointList:
                 return
         self.endpoint_list.append(new_endpoint)
     
+    def add_sensor_to_endpoint(self, endpoint_name:str, sensor:Sensor):
+        for endpoint in self.endpoint_list:
+            if endpoint_name == endpoint.name:
+                endpoint.add_sensor(sensor)
+                
     def remove_endpoint(self, endpoint_name:str):
         is_found = False
         for i in range(len(self.endpoint_list)):
