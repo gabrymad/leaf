@@ -2,19 +2,18 @@ import datetime
 from flask import Flask, Response, redirect, render_template, request
 from logic.tools import load_from_json
 import logic.tools as tools
-from logic.sensors import EndpointList, Endpoint
-from logic.sensors import MoistureSensor
-from logic.sensors import DataEntry
-
-
+import logic.models.sensor as se
+from logic.models.basic import DataEntry
+from logic.models.endpoint import Endpoint
+from logic.models.cluster import EndpointCluster
 
 app = Flask(__name__)
-endpoints = EndpointList()
+endpoints = EndpointCluster()
 sorting_tool = tools.Sort()
 searching_tool = tools.Search()
 
 #
-# HOMEPAGE
+# HOMEPAGE VIEW
 #
 def _build_homepage():
     index_kwargs = {}
@@ -28,9 +27,9 @@ def _build_homepage():
         for sensor in endpoint.sensor_list:
             sensor_kwargs = {}
             sensor_kwargs['sensor_name'] = sensor.name+': '
-            if sensor.sensor_bool_flag == None:
+            if sensor.binary_condition() == None:
                 sensor_kwargs['text_color'] = 'no-data-text-theme'
-            elif sensor.sensor_bool_flag == True:
+            elif sensor.binary_condition() == True:
                 sensor_kwargs['text_color'] = 'w3-text-yellow'
             else:
                 sensor_kwargs['text_color'] = 'w3-text-green'
@@ -52,7 +51,7 @@ def _build_homepage():
             color="w3-badge w3-round-medium danger-theme"
 
         card_kwargs['endpoint_status_color'] = color
-        card_kwargs['endpoint_page_path'] = endpoint.endpoint_page_path
+        card_kwargs['endpoint_page_path'] = endpoint.page_path()
         card_kwargs['sensor_card_list'] = sensors_prev_list
         card_kwargs['endpoint_name'] = endpoint.name
         card_kwargs['endpoint_addr'] = endpoint.mac_address
@@ -67,6 +66,7 @@ def _build_homepage():
     return index_kwargs
 
 
+# HOMEPAGE ROUTE
 @app.route('/')
 def home():
     index_kwargs = _build_homepage()
@@ -75,7 +75,7 @@ def home():
         **index_kwargs
     )
 
-
+# HOMEPAGE OPERATIONS
 @app.route('/search', methods=['POST'])
 def search():
     text = request.form.get('search_text')
@@ -97,7 +97,7 @@ def sort():
 
 
 #
-# ENDPOINT PAGE
+# ENDPOINT VIEW 
 #
 def _build_endpoint_page(endpoint_name:str):
     kwargs = {}
@@ -149,7 +149,7 @@ def _build_endpoint_page(endpoint_name:str):
     kwargs['sensor_cards'] = sensor_cards
     return kwargs
 
-
+# ENDPOINT ROUTE
 @app.route('/endpoint/<endpoint_name>')
 def endpoint_detail(endpoint_name:str):
     kwargs = _build_endpoint_page(endpoint_name)
@@ -157,35 +157,42 @@ def endpoint_detail(endpoint_name:str):
 
 
 #
-# SENSOR INSERT / DELETE
+# INSERT SENSOR VIEW
 #
 @app.route('/endpoint/<endpoint_name>/edit-sensor/<sensor_name>', methods=['GET', 'POST'])
 def add_sensor(endpoint_name:str, sensor_name:str):
     kwargs = {}
     kwargs['input_endpoint_name'] = endpoint_name
+    kwargs['endpoint_page_path'] = endpoints.get_endpoint_by_name(endpoint_name).page_path()
     return render_template('/update/update_sensor.html', **kwargs)
-
-@app.route('/save-sensor', methods=['POST'])
-def save_sensor():
-    sensor_name = request.form.get('sensor-name-input')
-    endpoint_name = request.form.get('endpoint-name-input')
-    sensor = MoistureSensor(sensor_name, 0)
-    endpoints.add_sensor_to_endpoint(endpoint_name, sensor)
-    return redirect('/endpoint/'+endpoint_name.replace(' ', '%20'))
-
-@app.route('/endpoint/<endpoint_name>/delete-sensor/<sensor_name>', methods=['GET', 'POST'])
-def delete_sensor(endpoint_name:str, sensor_name:str):
-    endpoints.delete_sensor_from_endpoint(endpoint_name, sensor_name)
-    return redirect('/endpoint/'+endpoint_name)
 
 
 #
-# ENDPOINT INSERT / DELETE
+# INSERT ENDPOINT VIEW
 #
 @app.route('/endpoint/edit-endpoint/<endpoint_name>', methods=['GET', 'POST'])
 @app.route('/edit-endpoint/<endpoint_name>', methods=['GET', 'POST'])
 def add_endpoint(endpoint_name:str):
     return render_template('/update/update_endpoint.html')
+
+
+#
+# INSERT / DELETE
+#
+@app.route('/save-sensor', methods=['POST'])
+def save_sensor():
+    sensor_name = request.form.get('sensor-name-input')
+    endpoint_name = request.form.get('endpoint-name-input')
+    sensor = se.MoistureSensor(sensor_name)
+    if endpoints.add_sensor_to_endpoint(endpoint_name, sensor):
+        return redirect(endpoints.get_endpoint_by_name(endpoint_name).page_path())
+    return redirect('/')
+
+@app.route('/endpoint/<endpoint_name>/delete-sensor/<sensor_name>', methods=['GET', 'POST'])
+def delete_sensor(endpoint_name:str, sensor_name:str):
+    endpoints.delete_sensor_from_endpoint(endpoint_name, sensor_name)
+    return redirect(endpoints.get_endpoint_by_name(endpoint_name).page_path())
+
 
 @app.route('/save-endpoint', methods=['POST'])
 def save_endpoint():
@@ -197,17 +204,17 @@ def save_endpoint():
     a5 = request.form.get('endpoint-address-input5')
     a6 = request.form.get('endpoint-address-input6')
     endpoint_address = a1+':'+a2+':'+a3+':'+a4+':'+a5+':'+a6
-    if ' ' in endpoint_address or '' in endpoint_address:
+    if ' ' in endpoint_address:
         return redirect('/')
     endpoint = Endpoint(endpoint_name, endpoint_address)
-    print(endpoint.endpoint_page_path)
-    endpoints.add_endpoint(endpoint)
-    return redirect('/endpoint/'+endpoint_name.replace(' ', '%20'))
+    if endpoints.add_endpoint(endpoint):
+        return redirect(endpoint.page_path())
+    return redirect('/')
 
 @app.route('/endpoint/delete-endpoint/<endpoint_name>', methods=['GET', 'POST'])
 @app.route('/delete-endpoint/<endpoint_name>', methods=['GET', 'POST'])
 def delete_endpoint(endpoint_name:str):
-    endpoints.remove_endpoint(endpoint_name)
+    endpoints.delete_endpoint_by_name(endpoint_name)
     return redirect('/')
 
 
@@ -219,12 +226,12 @@ def get_data(mac_address:str):
     if mac_address in endpoints.mac_addresses():
         print(request.json)
         json_data = request.json
-        sensor_id = json_data['sensor_id']
+        sensor_name = json_data['sensor_name']
         raw_value = json_data['raw_value']
         entry = DataEntry()
         entry.date_time = datetime.datetime.now()
         entry.raw_value = raw_value
-        endpoints.update(mac_address, sensor_id, entry)
+        endpoints.update_endpoint_sensor(mac_address, sensor_name, entry)
         print(len(endpoints.get_endpoint_by_address(mac_address).sensor_list[0].sensor_reading_list))
         print(endpoints.get_endpoint_by_address(mac_address).sensor_list[0].entries())
         return Response(status=200)
@@ -232,9 +239,7 @@ def get_data(mac_address:str):
 
 
 if __name__ == '__main__':
-    #endpoint_list = load_from_json()
-    #endpoints.set_endpoint_list(endpoint_list)
-    #esp8266 = Endpoint('Esp8266','3c:a0:67:13:ae:53')
-    #esp8266.add_sensor(MoistureSensor('sensore umidità', 0))
-    #endpoints.add_endpoint(esp8266)
+    endpoint_list = load_from_json()
+    endpoints.endpoint_list = endpoint_list
+    endpoints.available_slots = 2
     app.run(debug=True)

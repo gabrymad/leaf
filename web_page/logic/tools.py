@@ -1,6 +1,9 @@
 from dataclasses import dataclass
+import datetime
 import json
-from logic.sensors import Endpoint, MoistureSensor, DataEntry
+from logic.models.sensor import MoistureSensor
+from logic.models.endpoint import Endpoint
+from logic.models.basic import DataEntry
 
 
 class Search:
@@ -54,9 +57,9 @@ def load_from_json():
     f.close()
     endpoint_dict_list = json_data['endpoints']
     for endpoint_dict in endpoint_dict_list:
-        ep = Endpoint()
-        ep.mac_address = endpoint_dict['mac_address']
-        ep.set_name(endpoint_dict['name'])
+        name = endpoint_dict['name']
+        mac_address = endpoint_dict['mac_address']
+        ep = Endpoint(name, mac_address)
         dict_sensor_list = endpoint_dict['sensor_list']
         for sensor_dict in dict_sensor_list:
             name = sensor_dict['name']
@@ -65,10 +68,11 @@ def load_from_json():
                 if not sensor_dict['current_entry'] == None:
                     entry_dict = sensor_dict['current_entry']
                     current_entry = DataEntry()
-                    current_entry.date_time = entry_dict['date_time']
+                    current_entry.date_time = datetime.datetime.now()
                     current_entry.raw_value =  entry_dict['raw_value']
                     current_entry.value =  entry_dict['value']
                     sensor.update(current_entry)
+                    ep.update_timestamp()
                 sensor.is_soil_dry = sensor_dict['is_soil_dry']
             ep.add_sensor(sensor)
         ep.endpoint_status_code = endpoint_dict['endpoint_status_code']
