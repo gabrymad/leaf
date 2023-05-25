@@ -42,13 +42,13 @@ def _build_homepage():
             )
 
         if endpoint.endpoint_status_code in [-1, None]:
-            color="w3-badge w3-round-medium no-data-theme"
+            color="w3-badge w3-round-small no-data-theme"
         elif endpoint.endpoint_status_code == 0:
-            color="w3-badge w3-round-medium w3-green"
+            color="w3-badge w3-round-small w3-green"
         elif endpoint.endpoint_status_code == 1:
-            color="w3-badge w3-round-medium warning-theme"
+            color="w3-badge w3-round-small warning-theme"
         else:
-            color="w3-badge w3-round-medium danger-theme"
+            color="w3-badge w3-round-small danger-theme"
 
         card_kwargs['endpoint_status_color'] = color
         card_kwargs['endpoint_page_path'] = endpoint.page_path()
@@ -56,7 +56,7 @@ def _build_homepage():
         card_kwargs['endpoint_name'] = endpoint.name
         card_kwargs['endpoint_addr'] = endpoint.mac_address
         eps.append(render_template(
-            '/homepage_previews/enpoint_homepage_preview.html', 
+            '/homepage_previews/endpoint_homepage_preview.html', 
             **card_kwargs)
         )  
     index_kwargs['endpoint_card_list'] = eps
@@ -197,6 +197,8 @@ def delete_sensor(endpoint_name:str, sensor_name:str):
 @app.route('/save-endpoint', methods=['POST'])
 def save_endpoint():
     endpoint_name = request.form.get('endpoint-name-input')
+    endpoint_name = endpoint_name.lstrip()
+    endpoint_name = endpoint_name.rstrip()
     a1 = request.form.get('endpoint-address-input1')
     a2 = request.form.get('endpoint-address-input2')
     a3 = request.form.get('endpoint-address-input3')
@@ -204,11 +206,17 @@ def save_endpoint():
     a5 = request.form.get('endpoint-address-input5')
     a6 = request.form.get('endpoint-address-input6')
     endpoint_address = a1+':'+a2+':'+a3+':'+a4+':'+a5+':'+a6
-    if ' ' in endpoint_address:
+    if len(endpoint_name) < 1:
+        print('endpoint name not valid')
+        return redirect('/')
+    if ' ' in endpoint_address or len(endpoint_address) < 17:
+        print('endpoint address not valid')
         return redirect('/')
     endpoint = Endpoint(endpoint_name, endpoint_address)
     if endpoints.add_endpoint(endpoint):
+        print('all good')
         return redirect(endpoint.page_path())
+    print('error')
     return redirect('/')
 
 @app.route('/endpoint/delete-endpoint/<endpoint_name>', methods=['GET', 'POST'])

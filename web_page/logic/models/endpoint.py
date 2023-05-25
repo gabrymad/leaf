@@ -99,7 +99,6 @@ class Endpoint:
         current_time = datetime.datetime.now()
         if not self.last_update == None:
             timedelta = (current_time - self.last_update).total_seconds()
-            print(timedelta)
             if timedelta < 0:
                 print('wtf')
                 return 
