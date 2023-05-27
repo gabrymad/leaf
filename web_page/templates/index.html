@@ -3,6 +3,7 @@
 
     <head>
         <title>Leaf</title>
+        <link rel="icon" type="image/png" href="/web_page/static/logo.png">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -64,7 +65,7 @@
             </a>
         </div>
         
-        <div id="main" class="w3-container justify-content-center flex wrap mh-8">
+        <div id="main" class="w3-container flex wrap justify-content-center">
             {% for endpoint_card in endpoint_card_list %}
                 {{ endpoint_card|safe}}
             {% endfor %}

@@ -1,6 +1,7 @@
 .endpoint-card{
-    min-width: 200px;
-    max-width: 400px;
+    min-width: 300px;
+    max-width: 500px;
+    flex-grow: 1;
 }
 .custom-widget{
     justify-content: space-between;

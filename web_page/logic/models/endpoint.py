@@ -24,14 +24,23 @@ class Endpoint:
     #
     def add_sensor(self, new_sensor:Sensor) -> bool:
         if self.available_slots < 1:
-            print('no available slots')
+            print(
+                str(type(self).__name__).upper(),
+                ': no available slots')
             return False
         for sensor in self.sensor_list:
             if sensor.name == new_sensor.name:
-                print('Sensor name already exists')
+                print(
+                    str(type(self).__name__).upper() + ' ({name})'.format(name=self.name),
+                    ': sensor [{name}] already in sensor_list'.format(name=new_sensor.name))
                 return False
+        sensor_id = len(self.sensor_list)
+        new_sensor.id = sensor_id
         self.sensor_list.append(new_sensor)
         self.available_slots -= 1
+        print(
+            str(type(self).__name__).upper() + ' ({name})'.format(name=self.name),
+            ': sensor [{name}] added to sensor_list'.format(name=new_sensor.name))
         return True
     
         
@@ -45,13 +54,17 @@ class Endpoint:
         if self.last_update and self.first_update:
             self.running_time = self.last_update - self.first_update
     
-    def update_sensor(self, sensor_name:str, new_entry: DataEntry):
+    def update_sensor(self, sensor_id:str, new_entry: DataEntry):
         for sensor in self.sensor_list:
-            if sensor.name == sensor_name:
+            if sensor.id == sensor_id:
                 sensor.update(new_entry)
                 sensor.update_entries_list()
-                print('sensor updated')
-                return
+                print(
+                    str(type(self).__name__).upper() + ' ({name})'.format(name=self.name),
+                    ': sensor [{name}] updated'.format(name=sensor_id))
+                return True
+        return False
+
 
     
     #
@@ -67,9 +80,15 @@ class Endpoint:
         if is_found:
             sensor = self.sensor_list.pop(i)
             self.available_slots += 1
-            print('sensor removed')
+            print(
+                str(type(self).__name__).upper() + ' ({name})'.format(name=self.name),
+                ': sensor [{name}] deleted'.format(name=sensor_name))
+            return True
         else:
-            print('sensor name not found')
+            print(
+                str(type(self).__name__).upper() + ' ({name})'.format(name=self.name),
+                ': sensor [{name}] not found'.format(name=sensor_name))
+        return False
     
     #
     # GETTERS

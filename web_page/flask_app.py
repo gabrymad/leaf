@@ -102,6 +102,8 @@ def sort():
 def _build_endpoint_page(endpoint_name:str):
     kwargs = {}
     endpoint = endpoints.get_endpoint_by_name(endpoint_name)
+    if endpoint == None:
+        return None
     endpoint.check_status()
     kwargs['endpoint_name'] = endpoint_name
     kwargs['endpoint_mac_address'] = endpoint.mac_address
@@ -153,6 +155,8 @@ def _build_endpoint_page(endpoint_name:str):
 @app.route('/endpoint/<endpoint_name>')
 def endpoint_detail(endpoint_name:str):
     kwargs = _build_endpoint_page(endpoint_name)
+    if kwargs == None:
+        return redirect('/')
     return render_template('endpoint_detail.html', **kwargs)
 
 
@@ -182,10 +186,21 @@ def add_endpoint(endpoint_name:str):
 @app.route('/save-sensor', methods=['POST'])
 def save_sensor():
     sensor_name = request.form.get('sensor-name-input')
+    sensor_name = sensor_name.lstrip()
+    sensor_name = sensor_name.rstrip()
     endpoint_name = request.form.get('endpoint-name-input')
+    if len(endpoint_name) < 1:
+        print(
+            str(__name__).upper(),
+            ': sensor [{name}] not valid, check length and whitespaces'.format(name=endpoint_name))
+        return redirect('/')
     sensor = se.MoistureSensor(sensor_name)
     if endpoints.add_sensor_to_endpoint(endpoint_name, sensor):
+        print(str(__name__).upper(),
+            ': sensor [{name}] added correctly'.format(name=sensor_name))
         return redirect(endpoints.get_endpoint_by_name(endpoint_name).page_path())
+    print(str(__name__).upper(),
+            ': generic error')
     return redirect('/')
 
 @app.route('/endpoint/<endpoint_name>/delete-sensor/<sensor_name>', methods=['GET', 'POST'])
@@ -207,16 +222,20 @@ def save_endpoint():
     a6 = request.form.get('endpoint-address-input6')
     endpoint_address = a1+':'+a2+':'+a3+':'+a4+':'+a5+':'+a6
     if len(endpoint_name) < 1:
-        print('endpoint name not valid')
+        print(str(__name__).upper(),
+            ': endpoint [{name}] not valid, check length and whitespaces'.format(name=endpoint_name))
         return redirect('/')
     if ' ' in endpoint_address or len(endpoint_address) < 17:
-        print('endpoint address not valid')
+        print(str(__name__).upper(),
+            ': endpoint [{name}] not valid, check length and whitespaces'.format(name=endpoint_address))
         return redirect('/')
     endpoint = Endpoint(endpoint_name, endpoint_address)
     if endpoints.add_endpoint(endpoint):
-        print('all good')
+        print(str(__name__).upper(),
+            ': endpoint [{name}] added correctly'.format(name=endpoint_name))
         return redirect(endpoint.page_path())
-    print('error')
+    print(str(__name__).upper(),
+            ': generic error')
     return redirect('/')
 
 @app.route('/endpoint/delete-endpoint/<endpoint_name>', methods=['GET', 'POST'])
@@ -234,15 +253,15 @@ def get_data(mac_address:str):
     if mac_address in endpoints.mac_addresses():
         print(request.json)
         json_data = request.json
-        sensor_name = json_data['sensor_name']
+        sensor_id = json_data['sensor_id']
         raw_value = json_data['raw_value']
         entry = DataEntry()
         entry.date_time = datetime.datetime.now()
         entry.raw_value = raw_value
-        endpoints.update_endpoint_sensor(mac_address, sensor_name, entry)
-        print(len(endpoints.get_endpoint_by_address(mac_address).sensor_list[0].sensor_reading_list))
-        print(endpoints.get_endpoint_by_address(mac_address).sensor_list[0].entries())
-        return Response(status=200)
+        if endpoints.update_endpoint_sensor(mac_address, sensor_id, entry):
+            print(len(endpoints.get_endpoint_by_address(mac_address).sensor_list[sensor_id].sensor_reading_list))
+            print(endpoints.get_endpoint_by_address(mac_address).sensor_list[sensor_id].entries())
+            return Response(status=200)
     return Response(status=404)
 
 

@@ -25,6 +25,7 @@ class Sensor(ABC):
         self.current_entry:DataEntry = None
         self.sensor_reading_list:list[DataEntry] = []
         self.class_instance:str = type
+        self.id = None
 
     @abstractmethod
     def update(self, new_entry:DataEntry):
